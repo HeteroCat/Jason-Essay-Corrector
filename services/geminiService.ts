@@ -8,12 +8,48 @@ if (!process.env.API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
+export const extractTextFromImage = async (file: File): Promise<string> => {
+  const base64Encoder = (file: File) =>
+    new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve((reader.result as string).split(',')[1]);
+      reader.onerror = (error) => reject(error);
+    });
+
+  try {
+    const base64Data = await base64Encoder(file);
+    const imagePart = {
+      inlineData: {
+        mimeType: file.type,
+        data: base64Data,
+      },
+    };
+    const textPart = {
+      text: 'Extract all text from this image. Preserve formatting like paragraphs as best as you can.',
+    };
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: { parts: [imagePart, textPart] },
+    });
+
+    return response.text;
+  } catch (error) {
+    console.error("Error extracting text from image:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to extract text from image: ${error.message}`);
+    }
+    throw new Error("An unknown error occurred while extracting text from the image.");
+  }
+};
+
 const responseSchema = {
   type: Type.OBJECT,
   properties: {
     summary: {
       type: Type.STRING,
-      description: "A brief, encouraging, one or two-sentence summary of the overall feedback."
+      description: "A brief, encouraging, one or two-sentence summary of the overall feedback, in the essay's original language."
     },
     scores: {
       type: Type.OBJECT,
@@ -40,11 +76,11 @@ const responseSchema = {
           },
           suggestion: {
             type: Type.STRING,
-            description: "The corrected or improved version of the text."
+            description: "The corrected or improved version of the text, in the essay's original language."
           },
           explanation: {
             type: Type.STRING,
-            description: "A concise explanation of why the change is recommended (e.g., 'Incorrect verb tense', 'Spelling error')."
+            description: "A concise explanation of why the change is recommended (e.g., 'Incorrect verb tense', 'Spelling error'), in the essay's original language."
           },
           category: {
             type: Type.STRING,
@@ -64,7 +100,7 @@ const responseSchema = {
 let chat: Chat | null = null;
 
 const initializeChat = (essay: string, corrections: CorrectionResponse) => {
-    const systemInstruction = `You are an expert English teacher AI assistant. The user has submitted an essay and received corrections. 
+    const systemInstruction = `You are an expert language teacher AI assistant. The user has submitted an essay and received corrections. The conversation should be held in the same language as the original essay.
 The original essay was:
 ---
 ${essay}
@@ -75,7 +111,7 @@ The corrections provided were:
 ${JSON.stringify(corrections, null, 2)}
 ---
 
-Your role is to answer follow-up questions from the user about their essay, the corrections, or general English writing advice. Be helpful, encouraging, and provide clear explanations. Keep your answers concise.`;
+Your role is to answer follow-up questions from the user about their essay, the corrections, or general writing advice. Be helpful, encouraging, and provide clear explanations. Keep your answers concise and always respond in the language of the original essay.`;
 
     chat = ai.chats.create({
         model: "gemini-2.5-flash",
@@ -94,9 +130,9 @@ export const correctEssay = async (essayText: string): Promise<CorrectionRespons
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: `Please correct the following essay and provide feedback: \n\n---\n\n${essayText}`,
+      contents: `Please analyze and correct the following essay, providing all feedback in the essay's original language:\n\n---\n\n${essayText}`,
       config: {
-        systemInstruction: "You are an expert English teacher and essay corrector. Your goal is to provide constructive feedback on the user's essay. Analyze the essay for grammar, spelling, clarity, style, punctuation, and overall structure. Provide specific suggestions for improvement and a score from 1 to 10 for each category in the requested JSON format. Be thorough and find all potential issues.",
+        systemInstruction: "You are an expert language teacher and essay corrector. Your primary goal is to provide constructive feedback on the user's essay in its original language. First, identify the language of the essay. Then, analyze it for grammar, spelling, clarity, style, punctuation, and overall structure. All suggestions, explanations, and summaries must be in the same language as the essay. Provide specific suggestions for improvement and a score from 1 to 10 for each category in the requested JSON format. Be thorough and find all potential issues.",
         responseMimeType: "application/json",
         responseSchema: responseSchema,
       },
