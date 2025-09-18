@@ -1,64 +1,64 @@
-# AI Essay Corrector
+# AI 智能作文修改工具
 
-This is an AI-powered web application designed to help users improve their writing skills. By leveraging the Google Gemini API, it provides detailed analysis, corrections, and constructive feedback on essays.
+这是一款由 AI 驱动的 Web 应用，旨在帮助用户提升写作技巧。它利用 Google Gemini API 对作文进行详细分析，提供修改建议和建设性的反馈。
 
-The application features a clean, responsive, and user-friendly interface with a side-by-side view for easy comparison of the original text and the corrected version. It also includes an interactive AI chat assistant to answer any follow-up questions about the feedback.
+本应用界面设计简洁、响应式且用户友好，通过并排视图方便用户对比原文和修改后的版本。此外，应用还包含一个交互式 AI 聊天助手，可以回答任何关于反馈的后续问题。
 
+![AI 智能作文修改工具截图](https://storage.googleapis.com/aistudio-ux-team/project-factory-staging/clx20d61v000g1417z9j1p7nb/instances/clx20evv1000h14177434x8a9/screenshot.png)
 
+## ✨ 主要功能
 
-## ✨ Key Features
+- **高级 AI 分析**: 在语法、拼写、清晰度、风格、标点和结构等方面获得全面的反馈。
+- **详细评分**: 收到每个写作维度的评分明细及总分，快速了解文章的优点和不足。
+- **并排视图**: 原始作文、AI 反馈、修改版本和 AI 聊天功能被清晰地组织在多面板布局中。
+- **交互式修改**: 将鼠标悬停在修改后文本的高亮建议上，即可查看原文内容和 AI 的解释。
+- **AI 聊天助手**: 就作文或收到的反馈提出追问，AI 导师会即时解答。
+- **多种上传方式**: 直接粘贴文本，或上传 `.txt`、`.md` 文件以及图片（`.png`、`.jpg`），应用会自动提取文本 (OCR)。
+- **响应式设计**: 现代化的全响应式界面，在台式机、平板电脑和移动设备上都能无缝运行。
+- **深色模式**: 提供时尚的深色模式，在光线较暗的环境中也能舒适使用。
 
-- **Advanced AI Analysis**: Get comprehensive feedback on grammar, spelling, clarity, style, punctuation, and structure.
-- **Detailed Scoring**: Receive a score breakdown for each writing category, including an overall score, to quickly gauge strengths and weaknesses.
-- **Side-by-Side View**: The original essay, AI feedback, corrected version, and AI chat are organized in a clear, multi-panel layout.
-- **Interactive Corrections**: Hover over highlighted suggestions in the corrected text to see the original phrase and the AI's explanation.
-- **AI Assistant Chat**: Ask follow-up questions about your essay or the feedback provided and get instant answers from an AI tutor.
-- **Multiple Upload Options**: Paste text directly, or upload files including `.txt`, `.md`, and images (`.png`, `.jpg`) with automatic text extraction (OCR).
-- **Responsive Design**: A modern and fully responsive UI that works seamlessly on desktops, tablets, and mobile devices.
-- **Dark Mode**: Includes a sleek dark mode for comfortable viewing in low-light environments.
+## 🚀 使用方法
 
-## 🚀 How to Use
+1.  **输入您的作文**:
+    -   在左侧的“您的作文”文本框中输入或粘贴您的文章。
+    -   或者，点击 **上传** 按钮，从您的设备中选择一个 `.txt`、`.md` 或图片文件。文本将被自动加载到编辑器中。
+2.  **获取反馈**:
+    -   点击 **修改作文** 按钮。
+    -   AI 将分析您的文本，右侧的“反馈与评分卡”面板将显示结果。
+3.  **查看修改建议**:
+    -   “AI 摘要”提供了反馈的总体概览。
+    -   “分数明细”让您可以详细了解在每个类别的表现。
+    -   下方会显示“修改后的作文”视图，其中高亮了改进之处。将鼠标悬停在任何高亮部分，即可查看具体的修改内容和原因。
+4.  **提出问题**:
+    -   使用“AI 助手”聊天面板，就修改建议提出任何问题、寻求澄清或获取更多写作建议。
 
-1.  **Enter Your Essay**:
-    -   Type or paste your essay into the "Your Essay" text area on the left.
-    -   Alternatively, click the **Upload** button to select a `.txt`, `.md`, or image file from your device. The text will be automatically loaded into the editor.
-2.  **Get Feedback**:
-    -   Click the **Correct Essay** button.
-    -   The AI will analyze your text, and the "Feedback & score card" panel on the right will display the results.
-3.  **Review Corrections**:
-    -   An "AI Summary" provides a high-level overview of the feedback.
-    -   The "Score Breakdown" gives you a detailed look at your performance in each category.
-    -   The "Corrected Essay" view appears below, showing your essay with highlighted improvements. Hover over any highlight to see the specific change and the reason for it.
-4.  **Ask Questions**:
-    -   Use the "AI Assistant" chat panel to ask any questions about the corrections, seek clarification, or request further writing advice.
+## 🛠️ 技术栈
 
-## 🛠️ Technology Stack
+-   **前端**: 使用 [React](https://reactjs.org/) 和 [TypeScript](https://www.typescriptlang.org/) 构建，确保用户界面的健壮性和类型安全。
+-   **样式**: 使用 [Tailwind CSS](https://tailwindcss.com/) 进行样式设计，实现了一个现代化的、功能优先的设计系统。
+-   **AI 引擎**: 由 **Google Gemini API** (`gemini-2.5-flash`) 驱动所有核心功能，包括：
+    -   作文修改和反馈生成。
+    -   从图片中提取文本 (OCR)。
+    -   为聊天助手提供对话式 AI。
 
--   **Frontend**: Built with [React](https://reactjs.org/) and [TypeScript](https://www.typescriptlang.org/) for a robust and type-safe user interface.
--   **Styling**: Styled with [Tailwind CSS](https://tailwindcss.com/) for a modern, utility-first design system.
--   **AI Engine**: Powered by the **Google Gemini API** (`gemini-2.5-flash`) for all core functionalities, including:
-    -   Essay correction and feedback generation.
-    -   Text extraction from images (OCR).
-    -   Conversational AI for the chat assistant.
-
-## 📁 Project Structure
+## 📁 项目结构
 
 ```
 .
-├── index.html                # Main HTML entry point
-├── index.tsx                 # Main React application entry point
-├── App.tsx                   # Root component, manages state and layout
-├── metadata.json             # Application metadata
-├── README.md                 # This file
+├── index.html                # 主 HTML 入口文件
+├── index.tsx                 # React 应用主入口文件
+├── App.tsx                   # 根组件，管理状态和布局
+├── metadata.json             # 应用元数据
+├── README.md                 # 本文件
 ├── services/
-│   └── geminiService.ts      # Logic for all Gemini API interactions
+│   └── geminiService.ts      # 所有 Gemini API 交互逻辑
 ├── components/
-│   ├── EssayInput.tsx        # Component for text input and file uploads
-│   ├── CorrectionOutput.tsx  # Component to display summary and scores
-│   ├── CorrectedEssayView.tsx# Component to display the essay with highlights
-│   ├── ScoreCard.tsx         # Component for the score breakdown visualization
-│   ├── ChatPanel.tsx         # Interactive chat interface component
-│   ├── LoadingSpinner.tsx    # Reusable loading spinner
-│   └── icons.tsx             # SVG icon components
-└── types.ts                  # TypeScript type definitions for the application
+│   ├── EssayInput.tsx        # 文本输入和文件上传组件
+│   ├── CorrectionOutput.tsx  # 显示摘要和分数的组件
+│   ├── CorrectedEssayView.tsx# 显示带高亮修改的作文组件
+│   ├── ScoreCard.tsx         # 分数明细可视化组件
+│   ├── ChatPanel.tsx         # 交互式聊天界面组件
+│   ├── LoadingSpinner.tsx    # 可复用的加载动画
+│   └── icons.tsx             # SVG 图标组件
+└── types.ts                  # 应用的 TypeScript 类型定义
 ```
