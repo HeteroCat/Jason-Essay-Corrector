@@ -4,7 +4,7 @@ This is an AI-powered web application designed to help users improve their writi
 
 The application features a clean, responsive, and user-friendly interface with a side-by-side view for easy comparison of the original text and the corrected version. It also includes an interactive AI chat assistant to answer any follow-up questions about the feedback.
 
-![AI Essay Corrector Screenshot](https://storage.googleapis.com/aistudio-ux-team/project-factory-staging/clx20d61v000g1417z9j1p7nb/instances/clx20evv1000h14177434x8a9/screenshot.png)
+
 
 ## ✨ Key Features
 
