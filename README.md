@@ -4,7 +4,7 @@
 
 本应用界面设计简洁、响应式且用户友好，通过并排视图方便用户对比原文和修改后的版本。此外，应用还包含一个交互式 AI 聊天助手，可以回答任何关于反馈的后续问题。
 
-![AI 智能作文修改工具截图](https://storage.googleapis.com/aistudio-ux-team/project-factory-staging/clx20d61v000g1417z9j1p7nb/instances/clx20evv1000h14177434x8a9/screenshot.png)
+![AI 智能作文修改工具截图](https://s.coze.cn/t/2apAFl5asa4/)
 
 ## ✨ 主要功能
 
