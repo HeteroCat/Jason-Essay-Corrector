@@ -1,12 +1,14 @@
 import React from 'react';
 import { Scores, CorrectionCategory } from '../types';
 import { GrammarIcon, SpellingIcon, ClarityIcon, StyleIcon, PunctuationIcon, StructureIcon } from './icons';
+import { Translations } from '../lib/translations';
 
 interface ScoreCardProps {
   scores: Scores;
+  t: Translations;
 }
 
-const categoryDetails: { [key in CorrectionCategory]: { icon: JSX.Element; order: number } } = {
+const categoryDetails: { [key in CorrectionCategory]: { icon: React.ReactNode; order: number } } = {
   [CorrectionCategory.CLARITY]: { icon: <ClarityIcon />, order: 1 },
   [CorrectionCategory.GRAMMAR]: { icon: <GrammarIcon />, order: 2 },
   [CorrectionCategory.PUNCTUATION]: { icon: <PunctuationIcon />, order: 3 },
@@ -33,21 +35,30 @@ const ScoreBar: React.FC<{ score: number }> = ({ score }) => {
   );
 };
 
-const ScoreCard: React.FC<ScoreCardProps> = ({ scores }) => {
+const ScoreCard: React.FC<ScoreCardProps> = ({ scores, t }) => {
   const sortedScores = Object.entries(scores)
     .filter(([category]) => category in categoryDetails)
     .sort(([catA], [catB]) => categoryDetails[catA as CorrectionCategory].order - categoryDetails[catB as CorrectionCategory].order);
   
   const scoreValues = Object.values(scores).filter((s): s is number => typeof s === 'number');
   const totalScore = scoreValues.reduce((sum, score) => sum + score, 0);
+  
+  const categoryTranslations: { [key: string]: string } = {
+      clarity: t.clarity,
+      grammar: t.grammar,
+      punctuation: t.punctuation,
+      spelling: t.spelling,
+      structure: t.structure,
+      style: t.style,
+  };
 
   return (
     <div className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg p-4 shadow-sm">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Score Breakdown</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{t.scoreCardTitle}</h3>
         <div className="text-right">
             <p className="text-2xl font-bold text-gray-800 dark:text-gray-200">{totalScore}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Overall Score</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{t.scoreCardOverall}</p>
         </div>
       </div>
       <div className="space-y-4">
@@ -58,7 +69,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ scores }) => {
             <div key={category} className="grid grid-cols-12 items-center gap-x-4">
               <div className="col-span-4 flex items-center gap-2 text-gray-600 dark:text-gray-300">
                 <span className="text-gray-500 dark:text-gray-400">{details.icon}</span>
-                <span className="font-medium capitalize">{category.toLowerCase()}</span>
+                <span className="font-medium capitalize">{categoryTranslations[category.toLowerCase()]}</span>
               </div>
               <div className="col-span-6">
                 <ScoreBar score={score} />

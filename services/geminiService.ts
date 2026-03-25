@@ -2,11 +2,11 @@
 import { GoogleGenAI, Type, Chat } from "@google/genai";
 import { CorrectionResponse } from '../types';
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable not set");
+if (!process.env.GEMINI_API_KEY) {
+  throw new Error("GEMINI_API_KEY environment variable not set");
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export const extractTextFromImage = async (file: File): Promise<string> => {
   const base64Encoder = (file: File) =>
@@ -30,7 +30,7 @@ export const extractTextFromImage = async (file: File): Promise<string> => {
     };
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-flash-preview',
       contents: { parts: [imagePart, textPart] },
     });
 
@@ -114,7 +114,7 @@ ${JSON.stringify(corrections, null, 2)}
 Your role is to answer follow-up questions from the user about their essay, the corrections, or general writing advice. Be helpful, encouraging, and provide clear explanations. Keep your answers concise and always respond in the language of the original essay.`;
 
     chat = ai.chats.create({
-        model: "gemini-2.5-flash",
+        model: "gemini-3-flash-preview",
         config: {
             systemInstruction,
         }
@@ -129,7 +129,7 @@ export const correctEssay = async (essayText: string): Promise<CorrectionRespons
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3-flash-preview",
       contents: `Please analyze and correct the following essay, providing all feedback in the essay's original language:\n\n---\n\n${essayText}`,
       config: {
         systemInstruction: "You are an expert language teacher and essay corrector. Your primary goal is to provide constructive feedback on the user's essay in its original language. First, identify the language of the essay. Then, analyze it for grammar, spelling, clarity, style, punctuation, and overall structure. All suggestions, explanations, and summaries must be in the same language as the essay. Provide specific suggestions for improvement and a score from 1 to 10 for each category in the requested JSON format. Be thorough and find all potential issues.",
