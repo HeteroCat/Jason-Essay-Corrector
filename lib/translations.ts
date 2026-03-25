@@ -38,6 +38,7 @@ export const translations = {
     structure: 'structure',
     style: 'style',
     toggleLanguage: '中文',
+    deleted: '[deleted]',
   },
     zh: {
     title: 'Gemini AI 智能作文批改',
@@ -78,6 +79,7 @@ export const translations = {
     structure: '结构',
     style: '风格',
     toggleLanguage: 'English',
+    deleted: '[已删除]',
   },
 };
 
